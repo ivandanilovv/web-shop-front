@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="">
     <button @click="fetchSomething">click</button>
-    {{ip.data}}
+    {{ip}}
   </div>
 </template>
 
@@ -10,7 +10,7 @@ export default {
   name: 'IndexPage',
   data() {
     return {
-      ip: null,
+      ip: '',
     }
   },
   methods: {
