@@ -42,8 +42,8 @@
     </div>
     <div class="d-flex justify-content-center align-items-center" v-if="product">
       <div class="card w-30 rounded-4">
-        <img src="https://media.istockphoto.com/photos/mountain-landscape-picture-id517188688?k=20&m=517188688&s=612x612&w=0&h=i38qBm2P-6V4vZVEaMy_TaTEaoCMkYhvLCysE7yJQ5Q="
-             class="img-fluid rounded-top" alt="...">
+        <img :src="'http://127.0.0.1:5173/public/images/' + product.data.image"
+             class="img-fluid rounded-top" alt="test">
         <div class="card-body">
           <h5 class="card-title">
             {{product.data.name}}
@@ -95,6 +95,7 @@ export default {
       this.product = (await this.$axios.$get('http://127.0.0.1:8000/api/products/' + id))
     },
     getCategoryId() {
+      this.product = null;
       this.searchCategory = this.key;
       for (let i = 0; i < this.categories.data.length; i++) {
         if (this.searchCategory === this.categories.data[i].name) {
