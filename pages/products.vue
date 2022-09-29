@@ -17,11 +17,23 @@
         </button>
         </div>
         <div class="d-flex justify-content-center align-items-center" v-if="product">
-          <div class="card rounded-2">
-<!--            <img :src="'http://127.0.0.1:5173/public/images/' + product.data.image"-->
-<!--                 class="img-fluid rounded-top" alt="test">-->
-            <img src="https://thumbs.dreamstime.com/b/beautiful-rain-forest-ang-ka-nature-trail-doi-inthanon-national-park-thailand-36703721.jpg"
-                 class="img-fluid rounded-top" alt="Image" height="50">
+          <div class="card rounded-2 w-100 shadow">
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item ratio ratio-16x9" v-for="(item, i) in allImages" :class="{'active' : i===0}" v-if="i!==allImages.length-1">
+                  <img :src="'http://127.0.0.1:5173/public/images/' + item"
+                       class="rounded-top" alt="Image">
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
             <div class="card-body">
               <h5 class="card-title">
                 {{product.data.name}}
@@ -36,7 +48,7 @@
           </div>
         </div>
       </div>
-      <div class="col-7 d-flex flex-column align-items-center justify-content-center" v-if="searchCategory">
+      <div class="col-7 d-flex flex-column align-items-center" v-if="searchCategory">
         <table class="table table-striped table-hover table-responsive">
           <thead>
           <tr>
@@ -52,7 +64,7 @@
             <td class="align-middle">{{ product.name }}</td>
             <td class="align-middle">{{ searchCategory }}</td>
             <td class="align-middle">
-              <button class="btn btn-primary" @click="getProduct(product.id)">
+              <button class="btn btn-primary" @click="getProduct(product.id), getImages(product.image)">
                 View product
               </button>
             </td>
