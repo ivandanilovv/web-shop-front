@@ -2,15 +2,6 @@
   <div class="container">
     <custom-navbar active-page="categories"/>
     <categories-table :categories="categories"/>
-<!--    <div>-->
-<!--      View products for:-->
-<!--      <select class="form-control" id="selectCategory">-->
-<!--        <option v-for="category in categories.data" :value="category.name">-->
-<!--          {{ category.name }}-->
-<!--        </option>-->
-<!--      </select>-->
-<!--      <button class="btn btn-primary" @click="getCategoryId()">Get</button>-->
-<!--    </div>-->
   </div>
 </template>
 
