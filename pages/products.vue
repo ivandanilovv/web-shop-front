@@ -1,24 +1,17 @@
 <template>
   <div class="container">
     <custom-navbar active-page="products"/>
-    <div class="row pb-5">
-      <div class="col-5">
-        <div class="d-flex flex-row my-3">
-          <p class="m-0 ms-3">
-            View products for:
-          </p>
-          <select class="form-control w-30 ms-3" id="selectCategory" v-model="key">
-            <option v-for="category in categories.data" :value="category.name">
-              {{ category.name }}
-            </option>
-          </select>
-          <button class="btn btn-primary ms-3" @click="getCategoryId">
-            Filter products
-          </button>
-        </div>
-
-        <div class="d-flex justify-content-center align-items-center" v-if="product">
-          <div class="card rounded-2 w-100 shadow">
+    <div v-if="product" class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel"
+         aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="productModalLabel">
+              {{ product.data.name }}
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
             <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
               <div class="carousel-inner">
                 <div class="carousel-item ratio ratio-16x9" v-for="(item, i) in allImages" :class="{'active' : i===0}"
@@ -38,67 +31,83 @@
                 <span class="visually-hidden">Next</span>
               </button>
             </div>
-            <div class="card-body">
-              <h5 class="card-title">
-                {{ product.data.name }}
-              </h5>
-              <p class="card-text">
-                {{ product.data.description }}
-              </p>
-              <p>
-                Price: <span class="text-primary">{{ product.data.price }}&euro;</span>
-              </p>
-              <button class="btn btn-primary" @click="addToFavourites(product.data)">
-                Add to favourites
-              </button>
-            </div>
+            <h2 class="mt-3 fw-bold text-primary">
+              {{ product.data.name }}
+            </h2>
+            <p class="fs-4">
+              {{ product.data.description }}
+            </p>
+            <p class="fs-4">
+              Price: <span class="text-primary">{{ product.data.price }}&euro;</span>
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" @click="addToFavourites(product.data)">
+              Add to favourites
+            </button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
-      <div class="col-7">
-        <div class="d-flex flex-row justify-content-end mt-3">
-          <favourites :favourite-products="favourites"/>
-        </div>
-        <div class="d-flex flex-column align-items-center" v-if="searchCategory">
-          <table class="table table-striped table-hover table-responsive">
-            <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Category Name</th>
-              <th scope="col">Category</th>
-              <th scope="col">View product</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="product in products.data" v-if="product.category_id===searchCategoryId">
-              <th scope="row" class="align-middle">{{ product.id }}</th>
-              <td class="align-middle">{{ product.name }}</td>
-              <td class="align-middle">{{ searchCategory }}</td>
-              <td class="align-middle">
-                <button class="btn btn-primary" @click="getProduct(product.id), getImages(product.image)">
-                  View product
-                </button>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-          <div>
-            <button type="button" :disabled="!products.links.prev" @click="getPage(products.links.prev)">
-              Previous
+    </div>
+    <div class="row d-flex flex-row align-items-center justify-content-center my-3">
+      <div class="col-12 col-md-6 d-flex flex-row
+        align-items-center justify-content-center justify-content-md-end mb-3 mb-md-0">
+        <p class="m-0">
+          View products for:
+        </p>
+        <select class="form-control w-30 ms-3" id="selectCategory" v-model="key">
+          <option v-for="category in categories.data" :value="category.name">
+            {{ category.name }}
+          </option>
+        </select>
+      </div>
+      <div class="col-12 col-md-6 d-flex flex-row align-items-center justify-content-center justify-content-md-start">
+        <button class="btn btn-primary ms-sm-3 me-2 me-sm-4" @click="getCategoryId">
+          Filter products
+        </button>
+        <favourites :favourite-products="favourites"/>
+      </div>
+    </div>
+    <div class="d-flex flex-column align-items-center" v-if="searchCategory">
+      <table class="table table-striped table-hover table-responsive">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Category Name</th>
+          <th scope="col">Category</th>
+          <th scope="col">View product</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="product in products.data" v-if="product.category_id===searchCategoryId">
+          <th scope="row" class="align-middle">{{ product.id }}</th>
+          <td class="align-middle">{{ product.name }}</td>
+          <td class="align-middle">{{ searchCategory }}</td>
+          <td class="align-middle">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal"
+                    @click="getProduct(product.id), getImages(product.image)">
+              View product
             </button>
-            <button type="button" :disabled="!products.links.next" @click="getPage(products.links.next)">
-              Next
-            </button>
-          </div>
-        </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <div>
+        <button type="button" :disabled="!products.links.prev" @click="getPage(products.links.prev)">
+          Previous
+        </button>
+        <button type="button" :disabled="!products.links.next" @click="getPage(products.links.next)">
+          Next
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import CustomNavbar from "@/components/CustomNavbar";
 import Favourites from "@/components/Favourites";
+import CustomNavbar from "@/components/CustomNavbar";
 
 export default {
   name: "products",
@@ -112,11 +121,11 @@ export default {
       page: 0,
       products: '',
       product: null,
+      favourites: [],
       categories: '',
       allImages: null,
       searchCategory: '',
       searchCategoryId: null,
-      favourites: [],
     }
   },
   created() {
@@ -154,7 +163,7 @@ export default {
     },
     addToFavourites(product) {
       let exists = false;
-      for(const item of this.favourites) {
+      for (const item of this.favourites) {
         if (item.id === product.id) {
           exists = true;
           break;

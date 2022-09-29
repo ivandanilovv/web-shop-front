@@ -24,8 +24,8 @@
                 <div class="card-title fw-bold">
                   {{ product.name }}
                 </div>
-                <div class="card-text text-primary">
-                  {{ product.price }}&euro;
+                <div class="card-text">
+                  Price: <span class="text-primary">{{ product.price }}&euro;</span>
                 </div>
                 <div class="d-grid">
                   <button class="btn btn-outline-danger w-50 mt-3" @click="removeFromFavourites(product)">
