@@ -11,7 +11,7 @@
         <tbody>
         <tr v-for="category in categories.data">
           <th scope="row" class="align-middle">{{ category.id }}</th>
-          <td class="align-middle">{{ category.name }}</td>
+          <td class="align-middle fs-4 text-primary">{{ category.name }}</td>
         </tr>
         </tbody>
       </table>
