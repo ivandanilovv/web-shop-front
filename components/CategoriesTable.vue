@@ -4,14 +4,22 @@
       <table class="table table-striped table-hover table-responsive w-50">
         <thead>
         <tr>
-          <th scope="col">Category Id</th>
-          <th scope="col">Category Name</th>
+          <th scope="col">
+            Category Id
+          </th>
+          <th scope="col">
+            Category Name
+          </th>
         </tr>
         </thead>
         <tbody>
         <tr v-for="category in categories.data">
-          <th scope="row" class="align-middle">{{ category.id }}</th>
-          <td class="align-middle fs-4 text-primary">{{ category.name }}</td>
+          <th scope="row" class="align-middle">
+            {{ category.id }}
+          </th>
+          <td class="align-middle fs-4 text-primary">
+            {{ category.name }}
+          </td>
         </tr>
         </tbody>
       </table>

@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <custom-navbar active-page="products"/>
-    <div v-if="product" class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel"
-         aria-hidden="true">
+    <div v-if="product" class="modal fade" id="productModal" tabindex="-1"
+         aria-labelledby="productModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -13,7 +13,8 @@
           </div>
           <custom-modal :all-images="allImages" :product="product"/>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" @click="addToFavourites(product.data)">
+            <button type="button" class="btn btn-primary"
+                    @click="addToFavourites(product.data)">
               Add to favourites
             </button>
             <button type="button" class="btn btn-dark" data-bs-dismiss="modal">
@@ -24,8 +25,8 @@
       </div>
     </div>
     <div class="row d-flex flex-row align-items-center justify-content-center my-3">
-      <div class="col-12 col-md-6 d-flex flex-row
-        align-items-center justify-content-center justify-content-md-end mb-3 mb-md-0">
+      <div class="col-12 col-md-6 mb-3 mb-md-0
+      d-flex flex-row align-items-center justify-content-center justify-content-md-end">
         <p class="m-0 text-primary fs-5">
           View products for:
         </p>
@@ -46,17 +47,31 @@
       <table class="table table-striped table-hover table-responsive w-75">
         <thead>
         <tr>
-          <th scope="col">#</th>
-          <th scope="col">Category Name</th>
-          <th scope="col">Category</th>
-          <th scope="col">View product</th>
+          <th scope="col">
+            #
+          </th>
+          <th scope="col">
+            Category Name
+          </th>
+          <th scope="col">
+            Category
+          </th>
+          <th scope="col">
+            View product
+          </th>
         </tr>
         </thead>
         <tbody>
         <tr v-for="product in products.data">
-          <th scope="row" class="align-middle">{{ product.id }}</th>
-          <td class="align-middle text-primary fs-5">{{ product.name }}</td>
-          <td class="align-middle fs-5 text-secondary">{{ searchCategory }}</td>
+          <th scope="row" class="align-middle">
+            {{ product.id }}
+          </th>
+          <td class="align-middle text-primary fs-5">
+            {{ product.name }}
+          </td>
+          <td class="align-middle fs-5 text-secondary">
+            {{ searchCategory }}
+          </td>
           <td class="align-middle">
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal"
                     @click="getProduct(product.id), getImages(product.image)">
@@ -67,10 +82,12 @@
         </tbody>
       </table>
       <div v-if="products.links">
-        <button type="button" class="btn btn-primary" :disabled="!products.links.prev" @click="getPage(products.links.prev)">
+        <button type="button" class="btn btn-primary" :disabled="!products.links.prev"
+                @click="getPage(products.links.prev)">
           Previous
         </button>
-        <button type="button" class="btn btn-primary" :disabled="!products.links.next" @click="getPage(products.links.next)">
+        <button type="button" class="btn btn-primary" :disabled="!products.links.next"
+                @click="getPage(products.links.next)">
           Next
         </button>
       </div>
